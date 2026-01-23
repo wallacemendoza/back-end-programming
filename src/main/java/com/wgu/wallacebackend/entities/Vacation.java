@@ -23,27 +23,27 @@ public class Vacation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vacation_id", nullable = false)
-    private Long id;
+    private Long vacation_id;
 
     @Column(name = "vacation_title", nullable = false)
-    private String vacationTitle;
+    private String vacation_title;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "travel_fare_price", nullable = false)
-    private BigDecimal travelPrice;
+    private BigDecimal travel_fare_price;
 
     @Column(name = "image_url")
-    private String imageUrl;
+    private String image_URL;
 
     @Column(name = "create_date", updatable = false)
     @CreationTimestamp
-    private Date createDate;
+    private Date create_date;
 
     @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
+    private Date last_update;
 
     @OneToMany(mappedBy = "vacation", cascade = CascadeType.ALL)
     @ToString.Exclude

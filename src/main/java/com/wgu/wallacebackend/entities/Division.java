@@ -14,33 +14,38 @@ import java.util.Set;
 
 @Entity
 @Table(name = "divisions")
-@Getter
 @Setter
-@NoArgsConstructor
+@Getter
 public class Division {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "division_id", nullable = false)
+    @Column(name = "division_id")
     private Long id;
 
-    @Column(name = "division", nullable = false)
-    private String divisionName;
+    @Column(name = "division")
+    private String division_name;
 
-    @Column(name = "create_date", updatable = false)
     @CreationTimestamp
-    private Date createDate;
+    @Column(name = "create_date")
+    private Date create_date;
 
-    @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
+    @Column(name = "last_update")
+    private Date last_update;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id", nullable = false)
-    @ToString.Exclude
+    @JoinColumn(name = "country_id", nullable = false, insertable = false, updatable = false)
     private Country country;
 
-    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private Set<Customer> customers = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Customer> customers;
+
+    @Column(name = "country_id")
+    private long country_id ;
+    public void setCountry(Country country) {
+        setCountry_id(country.getId());
+        this.country = country;
+    }
+
 }

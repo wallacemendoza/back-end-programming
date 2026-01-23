@@ -23,24 +23,24 @@ public class Excursion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "excursion_id", nullable = false)
-    private Long id;
+    private Long excursion_id;
 
     @Column(name = "excursion_title", nullable = false)
-    private String excursionTitle;
+    private String excursion_title;
 
     @Column(name = "excursion_price", nullable = false)
-    private BigDecimal excursionPrice;
+    private BigDecimal excursion_price;
 
     @Column(name = "image_url")
-    private String imageUrl;
+    private String image_URL;
 
     @Column(name = "create_date", updatable = false)
     @CreationTimestamp
-    private Date createDate;
+    private Date create_date;
 
     @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
+    private Date last_update;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacation_id", nullable = false)

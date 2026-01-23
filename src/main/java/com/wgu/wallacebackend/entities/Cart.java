@@ -22,17 +22,17 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id", nullable = false)
+    @Column(name = "cart_id")
     private Long id;
 
     @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
 
     @Column(name = "package_price")
-    private BigDecimal packagePrice;
+    private BigDecimal package_price;
 
     @Column(name = "party_size")
-    private int partySize;
+    private int party_size;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
