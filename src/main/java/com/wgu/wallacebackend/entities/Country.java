@@ -24,7 +24,7 @@ public class Country {
     @Column(name = "country_id", nullable = false)
     private Long id;
 
-    // Angular expects "country_name"
+
     @Column(name = "country", nullable = false)
     private String country_name;
 

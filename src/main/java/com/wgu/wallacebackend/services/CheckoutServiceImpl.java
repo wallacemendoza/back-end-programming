@@ -30,13 +30,13 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
-        // Generate tracking number
+        // tracking number
         String orderTrackingNumber = generateOrderTrackingNumber();
         purchase.getCart().setOrderTrackingNumber(orderTrackingNumber);
 
         purchase.getCart().setStatus(StatusType.CartStatus.ordered);
 
-        // Fetch the vacation
+
         Vacation vacation = purchase.getCartItems()
                 .stream()
                 .findFirst()
@@ -52,10 +52,10 @@ public class CheckoutServiceImpl implements CheckoutService {
                     if (excursion.getVacation() == null) {
                         excursion.setVacation(vacation);
                     }
-                    // Save each excursion
+
                     excursionRepository.save(excursion);
                 }));
-        // Save the cart items
+
         purchase.getCartItems().forEach(cartItem -> {
             cartItem.setCart(savedCart);
 
@@ -75,7 +75,7 @@ public class CheckoutServiceImpl implements CheckoutService {
             }
         });
 
-        // Save the customer last as it's the top-level entity
+
         Customer customer = purchase.getCustomer();
         customerRepository.save(customer);
 
