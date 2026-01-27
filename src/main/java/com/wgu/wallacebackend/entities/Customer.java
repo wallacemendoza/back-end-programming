@@ -1,22 +1,21 @@
 package com.wgu.wallacebackend.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.Table;
+import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+
+
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "customers")
-@Getter
-@Setter
-@NoArgsConstructor
+@Table(name="customers")
+@Data
 public class Customer {
 
     @Id
@@ -27,32 +26,31 @@ public class Customer {
     @Column(name = "customer_first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "customer_last_name", nullable = false)
+    @Column(name = "customer_last_name")
     private String lastName;
 
     @Column(name = "address")
     private String address;
 
     @Column(name = "postal_code")
-    private String postalCode;
+    private String postal_code;
 
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "create_date", updatable = false)
+    @Column(name = "create_date", nullable = false)
     @CreationTimestamp
-    private Date createDate;
+    private Date create_date;
 
-    @Column(name = "last_update")
+    @Column(name = "last_update", nullable = false)
     @UpdateTimestamp
-    private Date lastUpdate;
+    private Date last_update;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "division_id", nullable = false)
-    @ToString.Exclude
-    private Division division;
+    @JoinColumn(name="division_id")
+    private Division divisions;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private Set<Cart> carts = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private Set<Cart> carts;
+
 }

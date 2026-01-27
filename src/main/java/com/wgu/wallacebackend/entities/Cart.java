@@ -2,14 +2,12 @@ package com.wgu.wallacebackend.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +15,6 @@ import java.util.Set;
 @Table(name = "carts")
 @Getter
 @Setter
-@NoArgsConstructor
 public class Cart {
 
     @Id
@@ -34,24 +31,33 @@ public class Cart {
     @Column(name = "party_size")
     private int party_size;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private StatusType status;
+    @Enumerated(EnumType.STRING)
+    private StatusType.CartStatus status = StatusType.CartStatus.pending;
 
-    @Column(name = "create_date", updatable = false)
     @CreationTimestamp
-    private Date createDate;
+    @Column(name = "create_date")
+    private Date create_date;
 
-    @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
+    @Column(name = "last_update")
+    private Date last_update;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItems = new HashSet<>();
+
+    public void add(CartItem item){
+        if (item != null) {
+            if (cartItems == null) {
+                cartItems = new HashSet<>();
+            }
+            cartItems.add(item);
+            item.setCart(this);
+        }
+    }
+
 }

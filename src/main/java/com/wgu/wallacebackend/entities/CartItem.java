@@ -1,45 +1,28 @@
 package com.wgu.wallacebackend.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
-import java.util.HashSet;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "cart_items")
 @Getter
 @Setter
-@NoArgsConstructor
 public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id", nullable = false)
+    @Column(name = "cart_item_id")
     private Long id;
 
-    @Column(name = "create_date", updatable = false)
-    @CreationTimestamp
-    private Date createDate;
-
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private Date lastUpdate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", nullable = false)
-    @ToString.Exclude
-    private Cart cart;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vacation_id", nullable = false)
-    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "vacation_id")
     private Vacation vacation;
 
     @ManyToMany
@@ -48,6 +31,18 @@ public class CartItem {
             joinColumns = @JoinColumn(name = "cart_item_id"),
             inverseJoinColumns = @JoinColumn(name = "excursion_id")
     )
-    @ToString.Exclude
-    private Set<Excursion> excursions = new HashSet<>();
+    Set<Excursion> excursions;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
+    @CreationTimestamp
+    @Column(name = "create_date")
+    private Date create_date;
+
+    @UpdateTimestamp
+    @Column(name = "last_update")
+    private Date last_update;
+
 }

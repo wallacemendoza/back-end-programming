@@ -2,52 +2,46 @@ package com.wgu.wallacebackend.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "excursions")
 @Getter
 @Setter
-@NoArgsConstructor
 public class Excursion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "excursion_id", nullable = false)
-    private Long excursion_id;
+    @Column(name = "excursion_id")
+    private Long id;
 
-    @Column(name = "excursion_title", nullable = false)
+    @Column(name = "excursion_title")
     private String excursion_title;
 
-    @Column(name = "excursion_price", nullable = false)
+    @Column(name = "excursion_price")
     private BigDecimal excursion_price;
 
     @Column(name = "image_url")
     private String image_URL;
 
-    @Column(name = "create_date", updatable = false)
     @CreationTimestamp
+    @Column(name = "create_date")
     private Date create_date;
 
-    @Column(name = "last_update")
     @UpdateTimestamp
+    @Column(name = "last_update")
     private Date last_update;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vacation_id", nullable = false)
-    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "vacation_id")
     private Vacation vacation;
 
     @ManyToMany(mappedBy = "excursions")
-    @ToString.Exclude
-    private Set<CartItem> cartItems = new HashSet<>();
+    Set<CartItem> cart_items;
 }
